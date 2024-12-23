@@ -1,6 +1,8 @@
 # CHNet
 \title{Efficient Camouflaged Object Detection Network Based on Channel Reconstruction and Hybrid Attention}
 
+![image](https://github.com/user-attachments/assets/4dd0aa79-ff4d-44e7-87de-b24f78ad8683)
+
 
 ## Environment
 python = Python 3.9
@@ -14,15 +16,18 @@ We thank them for their contributions.
 
 ## Network
 
-[fig2.pdf](https://github.com/user-attachments/files/18226408/fig2.pdf)
-[fig3.pdf](https://github.com/user-attachments/files/18226419/fig3.pdf)
+![image](https://github.com/user-attachments/assets/3d40fdef-4c7d-4031-bca5-9299c85f6468)
+![image](https://github.com/user-attachments/assets/10673727-db50-4d74-9d61-5ee24fd1624d)
+
 
 ## Experiments
 
 ![image](https://github.com/user-attachments/assets/47d72ea9-d98d-4d66-a549-9a7d1ec78e64)
 
-[fig4.pdf](https://github.com/user-attachments/files/18226463/fig4.pdf)
+![image](https://github.com/user-attachments/assets/7a552dc0-d88f-48cf-89c6-f198eb00e558)
 
 ![image](https://github.com/user-attachments/assets/b15248cd-1958-4ae1-9522-e97ef5103e75)
 
-[fig5.pdf](https://github.com/user-attachments/files/18226464/fig5.pdf)
+![image](https://github.com/user-attachments/assets/7715d435-7ea6-4b43-ae5b-fed11df92318)
+
+
