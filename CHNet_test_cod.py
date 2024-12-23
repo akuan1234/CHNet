@@ -28,7 +28,7 @@ elif opt.gpu_id=='1':
 
 #load the model
 model = CHNet()
-model.load_state_dict(torch.load('../autodl-tmp/d-B+FE+FG/CHNet_epoch_113.pth'))  ## weight path
+model.load_state_dict(torch.load('*********************************'))  ## weight path
 model.cuda()
 model.eval()
 
