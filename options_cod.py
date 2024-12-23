@@ -1,6 +1,6 @@
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('--epoch', type=int, default=170, help='epoch number')
+parser.add_argument('--epoch', type=int, default=180, help='epoch number')
 parser.add_argument('--lr', type=float, default=5e-5, help='learning rate')  # 5e-5
 parser.add_argument('--batchsize', type=int, default=24, help='training batch size')
 parser.add_argument('--trainsize', type=int, default=416, help='training dataset size')
@@ -13,5 +13,5 @@ parser.add_argument('--rgb_root', type=str, default='./TrainDataset/Imgs/', help
 parser.add_argument('--gt_root', type=str, default='./TrainDataset/GT/', help='the training gt images root')
 parser.add_argument('--test_rgb_root', type=str, default='./TestDataset/CAMO/Imgs/', help='the test gt images root')
 parser.add_argument('--test_gt_root', type=str, default='./TestDataset/CAMO/GT/', help='the test gt images root')
-parser.add_argument('--save_path', type=str, default='../autodl-tmp/d-B+FE+FG/', help='the path to save models and logs')
+parser.add_argument('--save_path', type=str, default='*****************************', help='the path to save models and logs')
 opt = parser.parse_args()
