@@ -1,5 +1,5 @@
 # CHNet
-\title{Efficient Camouflaged Object Detection Network Based on Channel Reconstruction and Hybrid Attention}
+##Efficient Camouflaged Object Detection Network Based on Channel Reconstruction and Hybrid Attention
 
 ![image](https://github.com/user-attachments/assets/4dd0aa79-ff4d-44e7-87de-b24f78ad8683)
 
@@ -8,10 +8,10 @@
 python = Python 3.9
 others packages can be found at requirement.txt
 ## Materials
-You can find the training and test datasets at the following links
+You can find the training and test datasets at the following links\\
 https://github.com/DengPingFan/SINet/
-You can find the pre-trained SMT-t weights at the following link
-https://github.com/AFeng-x/SMT
+You can find the pre-trained SMT-t weights at the following link\\
+https://github.com/AFeng-x/SMT \\
 We thank them for their contributions.
 
 ## Network
