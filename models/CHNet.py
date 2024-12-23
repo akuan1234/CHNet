@@ -22,7 +22,7 @@ class BasicConv2d(nn.Module):
         x = self.bn(x)
         return x
 
-class CRU(nn.Module):
+class NFI(nn.Module):
     '''
     alpha: 0<alpha<1
     '''
@@ -63,12 +63,9 @@ class CRU(nn.Module):
         out = out + x
         return self.final_relu(out)
 
-
-
-
-class CAFM(nn.Module):
+class FG(nn.Module):
     def __init__(self, dim, num_heads, bias=False):
-        super(CAFM, self).__init__()
+        super(FG, self).__init__()
         self.num_heads = num_heads
         self.temperature = nn.Parameter(torch.ones(num_heads, 1, 1))
         self.qkv = nn.Conv3d(dim, dim * 3, kernel_size=(1, 1, 1), bias=bias)
@@ -116,57 +113,9 @@ class CAFM(nn.Module):
         out = output + y
         return self.final_relu(out)
 
-
-
-class XXX(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-        self.gate_genator = nn.Sequential(
-            nn.AdaptiveAvgPool2d((1, 1)),
-            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=1 ),
-            nn.ReLU(True),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=1 ),
-            nn.Softmax(dim=1),
-        )
-
-        self.fuse = BasicConv2d(64, 64, kernel_size=3, stride=1, padding=1, relu=True)
-        self.fuse1 = BasicConv2d(128, 64, kernel_size=3, stride=1, padding=1, relu=True)
-
-        self.final_relu = nn.ReLU(True)
-
-    def forward(self, x, y, z):
-        xy = torch.cat((x, y), 1)
-        gate = self.gate_genator(xy)
-        xy = self.fuse1(xy)
-        out = self.fuse(xy * gate)
-        z1 = self.fuse(z)
-        z2 = self.fuse(z)
-        out = out * (1 + z1) + z2
-        return self.final_relu(out)
-
-class YYY(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-        self.uconv3 = BasicConv2d(128, 64, kernel_size=3, stride=1, padding=1, relu=True)
-
-        self.up1 = nn.UpsamplingBilinear2d(scale_factor=2)
-
-    def forward(self, x1, x2, x3, x4):
-        x1_ = self.up1(x1)  # 将图像大小扩大一倍
-        x12_ = torch.cat((x2, x1_), 1)
-        x12_ = self.uconv3(x12_)
-        x12_ = self.up1(x12_)
-        x123_ = torch.cat((x3, x12_), 1)
-        x123_ = self.up1(x123_)
-        x123_ = self.uconv3(x123_)
-        x1234_ = torch.cat((x4, x123_), 1)
-        x1234_ = self.uconv3(x1234_)
-        return x1234_
-class FEM(nn.Module):
+class FE(nn.Module):
     def __init__(self, in_planes, out_planes, stride=1, scale=0.1, map_reduce=8):
-        super(FEM, self).__init__()
+        super(FE, self).__init__()
         self.scale = scale
         self.out_channels = out_planes
         inter_planes = in_planes // map_reduce
@@ -222,15 +171,14 @@ class CHNet(nn.Module):
         self.Translayer3_1 = BasicConv2d(256, 64, 1)
         self.Translayer4_1 = BasicConv2d(512, 64, 1)
 
-        self.CRU = CRU(64,
+        self.NFI = NFI(64,
                        alpha=alpha,
                        squeeze_radio=squeeze_radio,
                        group_size=group_size,
                        group_kernel_size=group_kernel_size)
 
-        self.FEM = FEM(in_planes=64, out_planes=64)
-        # self.XXX = XXX()
-        self.CAFM = CAFM(dim=64, num_heads=8)
+        self.FE = FE(in_planes=64, out_planes=64)
+        self.FG = FG(dim=64, num_heads=8)
 
         self.uconv1 = BasicConv2d(64, 64, kernel_size=3, stride=1, padding=1, relu=True)
         self.uconv3 = BasicConv2d(128, 64, kernel_size=3, stride=1, padding=1, relu=True)
@@ -251,33 +199,25 @@ class CHNet(nn.Module):
         r3 = rgb_list[1]  # 128,48
         r4 = rgb_list[0]  # 64,96,96
 
-        r3 = self.Translayer2_1(r3)  # [1, 64, 44, 44]
+        r3 = self.Translayer2_1(r3)  #
         r2 = self.Translayer3_1(r2)
-        r1 = self.Translayer4_1(r1)  # 都变为64的通道
-        r1 = self.FEM(r1)
-        r2 = self.FEM(r2)
-        r3 = self.FEM(r3)
-        r4 = self.FEM(r4)
+        r1 = self.Translayer4_1(r1)  # 
+        r2 = self.FE(r2)
+        r3 = self.FE(r3)
+        r4 = self.FE(r4)
 
-        # y1 = self.YYY(r1, r2, r3, r4)
-
-        # r1 = self.up1(r1)
-        # x12 = self.CRU(r2 + r1)
-        # r2 = self.up1(r2)
-        # x23 = self.CRU(r3 + r2)
-        # r3 = self.up1(r3)
-        # x34 = self.CRU(r4 + r3)
         r1 = self.up1(r1)
+        x12 = self.NFI(r2 + r1)
+        r2 = self.up1(r2)
+        x23 = self.NFI(r3 + r2)
+        r3 = self.up1(r3)
+        x34 = self.NFI(r4 + r3)
 
-        x1 = self.CAFM(r1 + r2)
+        x1 = self.FG(r1 + x12)
         x1 = self.up1(x1)
-        x2 = self.CAFM(x1 + r3)
-        # r1_ = self.up1(r1_)
-        # x2 = x2 * (1 + r1_) + r1_
+        x2 = self.FG(x1 + x23)
         x2 = self.up1(x2)
-        x3 = self.CAFM(x2 + r4)
-        # r1_ = self.up1(r1_)
-        # x3 = x3 * (1 + r1_) + r1_
+        x3 = self.FG(x2 + x34)
 
         r123 = F.interpolate(self.predtrans1(x3), size=416, mode='bilinear')
         r12 = F.interpolate(self.predtrans2(x2), size=416, mode='bilinear')
