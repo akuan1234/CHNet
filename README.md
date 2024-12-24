@@ -11,11 +11,12 @@ others packages can be found at requirement.txt
 ## Materials
 You can find the training and test datasets at the following links
 
-https://github.com/DengPingFan/SINet/
+https://github.com/*******/******/  Link temporarily blocked to comply with double-blind submission policy
 
 You can find the pre-trained SMT-t weights at the following link
 
-https://github.com/AFeng-x/SMT 
+https://github.com/********/SMT  
+Link temporarily blocked to comply with double-blind submission policy
 
 We thank them for their contributions.
 
