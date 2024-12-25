@@ -13,7 +13,7 @@ from data_cod import test_dataset
 parser = argparse.ArgumentParser()
 parser.add_argument('--testsize', type=int, default=416, help='testing size')
 parser.add_argument('--gpu_id', type=str, default='0', help='select gpu id')
-parser.add_argument('--test_path', type=str, default='./TestDataset/', help='test dataset path')
+parser.add_argument('--test_path', type=str, default='********************************', help='test dataset path')
 opt = parser.parse_args()
 
 dataset_path = opt.test_path
