@@ -34,7 +34,7 @@ model.eval()
 
 test_datasets = ['NC4K']
 for dataset in test_datasets:
-    save_path = './test_maps/CHNet/' + dataset + '/'
+    save_path = '**************************************' + dataset + '/'  ## test dataset save path
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     image_root = dataset_path + dataset + '/Imgs/'
