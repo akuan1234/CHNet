@@ -202,6 +202,7 @@ class CHNet(nn.Module):
         r3 = self.Translayer2_1(r3)  #
         r2 = self.Translayer3_1(r2)
         r1 = self.Translayer4_1(r1)  # 
+        r1 = self.FE(r1)
         r2 = self.FE(r2)
         r3 = self.FE(r3)
         r4 = self.FE(r4)
