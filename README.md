@@ -23,7 +23,9 @@ We thank them for their contributions.
 ## Network
 
 ![image](https://github.com/user-attachments/assets/3d40fdef-4c7d-4031-bca5-9299c85f6468)
-![image](https://github.com/user-attachments/assets/10673727-db50-4d74-9d61-5ee24fd1624d)
+
+![image](https://github.com/user-attachments/assets/3cd45019-f6f1-4cf1-8270-2cb06a81c013)
+
 
 
 ## Experiments
